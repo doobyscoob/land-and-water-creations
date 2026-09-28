@@ -1,0 +1,42 @@
+name: Remove M360 credit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/remove-m360-credit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Remove Marketing 360 footer credit
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          pattern = re.compile(r'\s*<div class="scCredit"><a href="https://www\.marketing360\.com\?ref=sitereferral" target="_blank" rel="nofollow">Created with <span>Marketing 360</span></a></div>')
+          changed = 0
+          for path in Path("site").rglob("*.html"):
+              text = path.read_text(encoding="utf-8")
+              new = pattern.sub("", text)
+              if new != text:
+                  path.write_text(new, encoding="utf-8")
+                  changed += 1
+          print(f"Updated {changed} HTML files")
+          PY
+
+      - name: Commit cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site
+          git commit -m "Remove Marketing 360 footer credit" || exit 0
+          git push
