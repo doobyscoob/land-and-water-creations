@@ -19,7 +19,7 @@ jobs:
           rm -rf site
           mkdir site
           cd site
-          wget --mirror --page-requisites --convert-links --adjust-extension --span-hosts --no-host-directories --domains=landandwatercreations.com,www.landandwatercreations.com,static.mywebsites360.com https://landandwatercreations.com/
+          wget --mirror --page-requisites --convert-links --adjust-extension --span-hosts --no-host-directories --domains=landandwatercreations.com,www.landandwatercreations.com,static.mywebsites360.com https://landandwatercreations.com/ || true
 
       - name: Commit downloaded site
         run: |
