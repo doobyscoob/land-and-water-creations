@@ -1,6 +1,8 @@
 name: Mirror live site
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
