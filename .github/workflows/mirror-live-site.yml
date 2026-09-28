@@ -1,0 +1,28 @@
+name: Mirror live site
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download live site
+        run: |
+          rm -rf site
+          mkdir site
+          cd site
+          wget --mirror --page-requisites --convert-links --adjust-extension --span-hosts --no-host-directories --domains=landandwatercreations.com,www.landandwatercreations.com,static.mywebsites360.com https://landandwatercreations.com/
+
+      - name: Commit downloaded site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site
+          git commit -m "Mirror live site" || exit 0
+          git push
