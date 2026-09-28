@@ -1,0 +1,13 @@
+/* Nav Dropdowns */
+
+.navContent ul li ul a {
+    white-space: normal !important;
+    overflow: visible !important;
+}
+
+@media only screen and (min-width: 768px) {
+    .navContent ul li ul {
+        min-width: 250px !important;
+        right: auto !important; 
+    }
+}
