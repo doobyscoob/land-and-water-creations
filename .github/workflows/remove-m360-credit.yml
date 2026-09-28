@@ -1,4 +1,4 @@
-name: Remove M360 credit
+name: Remove M360 dependencies
 
 on:
   push:
@@ -16,21 +16,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Remove Marketing 360 footer credit
+      - name: Remove Marketing 360 references and localize mirrored assets
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
 
-          pattern = re.compile(r'\s*<div class="scCredit"><a href="https://www\.marketing360\.com\?ref=sitereferral" target="_blank" rel="nofollow">Created with <span>Marketing 360</span></a></div>')
+          credit = re.compile(r'\s*<div class="scCredit"><a href="https://www\.marketing360\.com\?ref=sitereferral" target="_blank" rel="nofollow">Created with <span>Marketing 360</span></a></div>')
+          text_exts = {".html",".css",".js",".txt",".xml",".json",".svg"}
           changed = 0
-          for path in Path("site").rglob("*.html"):
-              text = path.read_text(encoding="utf-8")
-              new = pattern.sub("", text)
+          for path in Path("site").rglob("*"):
+              if not path.is_file() or path.suffix.lower() not in text_exts:
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8")
+              except UnicodeDecodeError:
+                  continue
+              new = credit.sub("", text)
+              new = new.replace("https://static.mywebsites360.com", "")
+              new = new.replace("http://static.mywebsites360.com", "")
               if new != text:
                   path.write_text(new, encoding="utf-8")
                   changed += 1
-          print(f"Updated {changed} HTML files")
+          print(f"Updated {changed} files")
           PY
 
       - name: Commit cleanup
@@ -38,5 +46,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add site
-          git commit -m "Remove Marketing 360 footer credit" || exit 0
+          git commit -m "Remove remaining M360 dependencies" || exit 0
           git push
