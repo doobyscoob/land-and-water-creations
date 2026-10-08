@@ -1,0 +1,13 @@
+
+/* Shared layout uses the existing Water Features hero, typography and foliage. */
+.water-page{max-width:1160px;margin:0 auto;padding:48px 24px;text-align:left;line-height:1.7}
+.water-content{background-image:url('/e6d5e5d7fcc6483c90819a8c6c06bace/i/e90648a0c6514fa1a6f6f31152e35baf/1/5feFb8zhrk/BG.jpg');background-size:cover}
+.water-page p{margin:0 0 18px}.water-page section{margin-top:48px}
+.water-page .water-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.water-page figure{margin:0}.water-page img{display:block;width:100%;height:auto}
+.water-page figcaption{font-size:14px;margin-top:10px}.water-page .water-card{padding:0}
+.water-page ol{list-style:decimal;padding-left:24px}.water-page li{margin-bottom:16px}
+.water-page details{border-top:1px solid currentColor;padding:18px 0}
+.water-page summary{font-weight:bold;cursor:pointer}.water-page details p{margin:14px 0 0}
+.water-page .button{display:inline-block;margin:8px 12px 8px 0}
+@media(max-width:700px){.water-page{padding:28px 18px}.water-page .water-grid{grid-template-columns:1fr;gap:24px}.water-page section{margin-top:36px}}
