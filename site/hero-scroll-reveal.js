@@ -54,50 +54,20 @@
       0;
   }
 
-  function getHeroContainer(panel) {
-    var current = panel;
-    while (current && current !== document.body) {
-      if (current.classList && current.classList.contains("outdoor-intro")) {
-        return current;
-      }
-      if (typeof current.className === "string" &&
-          /(?:^|\s)blockWrap_[^\s]+/.test(current.className)) {
-        return current;
-      }
-      current = current.parentElement;
-    }
-    return panel;
-  }
-
-  function getHeaderInset() {
+  function getHeaderHeight() {
+    // Match the reveal distance to one header-height of scrolling.
     var header = document.querySelector(".headerAndNavContainer.fixedNav");
-    var position;
-    if (!header) {
-      return 0;
-    }
-    position = window.getComputedStyle(header).position;
-    return position === "fixed" || position === "sticky" ? header.offsetHeight : 0;
+    return header ? header.offsetHeight : 0;
   }
 
-  function getRevealProgress(panel, scrollPosition, headerInset) {
-    var hero = getHeroContainer(panel);
-    var rect = hero.getBoundingClientRect();
-    var height = rect.height || hero.offsetHeight || 1;
-    var heroTop = rect.top + scrollPosition;
-    var start = Math.max(0, heroTop - headerInset);
-    var finish = heroTop + height - headerInset - height * 2 / 3;
-    var progress;
-
-    if (finish <= start) {
-      finish = start + height / 3;
-    }
-    progress = Math.max(0, Math.min(1, (scrollPosition - start) / (finish - start)));
+  function getRevealProgress(scrollPosition, revealDistance) {
+    var progress = Math.max(0, Math.min(1, scrollPosition / revealDistance));
     return progress * progress * (3 - 2 * progress);
   }
 
   function updatePanels() {
     var scrollPosition = getScrollPosition();
-    var headerInset = getHeaderInset();
+    var revealDistance = getHeaderHeight() || 96;
     var i;
 
     framePending = false;
@@ -105,7 +75,7 @@
       var panel = panels[i];
       var progress = panel.contains(document.activeElement)
         ? 1
-        : getRevealProgress(panel, scrollPosition, headerInset);
+        : getRevealProgress(scrollPosition, revealDistance);
       var width = panel.offsetWidth || panel.getBoundingClientRect().width || window.innerWidth;
       var offset = Math.round((width + 64) * (1 - progress) * 10) / 10;
 
