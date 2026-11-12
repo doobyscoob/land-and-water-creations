@@ -18,6 +18,8 @@
     ".outdoor-intro__panel"
   ].join(", ");
   var panels = [];
+  var headerElement = null;
+  var headerMovesWithScroll = false;
   var framePending = false;
   var reducedMotionQuery = window.matchMedia
     ? window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -54,10 +56,19 @@
       0;
   }
 
+  function updateHeaderLayout() {
+    var position;
+    if (!headerElement) {
+      headerMovesWithScroll = false;
+      return;
+    }
+    position = window.getComputedStyle(headerElement).position;
+    headerMovesWithScroll = position === "fixed" || position === "sticky";
+  }
+
   function getHeaderHeight() {
     // Match the reveal distance to one header-height of scrolling.
-    var header = document.querySelector(".headerAndNavContainer.fixedNav");
-    return header ? header.offsetHeight : 0;
+    return headerElement ? headerElement.offsetHeight : 0;
   }
 
   function getRevealProgress(scrollPosition, revealDistance) {
@@ -68,14 +79,32 @@
   function updatePanels() {
     var scrollPosition = getScrollPosition();
     var revealDistance = getHeaderHeight() || 96;
+    var revealProgress = getRevealProgress(scrollPosition, revealDistance);
     var i;
 
     framePending = false;
+    if (headerElement && headerMovesWithScroll) {
+      var headerProgress = headerElement.contains(document.activeElement) ? 0 : revealProgress;
+      var headerOffset = Math.round(headerElement.offsetHeight * headerProgress * 10) / 10;
+
+      headerElement.style.opacity = (1 - headerProgress).toFixed(3);
+      headerElement.style.pointerEvents = headerProgress >= 1 ? "none" : "auto";
+      headerElement.style.transform = prefersReducedMotion
+        ? "none"
+        : "translate3d(0, -" + headerOffset + "px, 0)";
+      headerElement.style.willChange = prefersReducedMotion ? "opacity" : "opacity, transform";
+    } else if (headerElement) {
+      headerElement.style.opacity = "";
+      headerElement.style.pointerEvents = "";
+      headerElement.style.transform = "";
+      headerElement.style.willChange = "";
+    }
+
     for (i = 0; i < panels.length; i += 1) {
       var panel = panels[i];
       var progress = panel.contains(document.activeElement)
         ? 1
-        : getRevealProgress(scrollPosition, revealDistance);
+        : revealProgress;
       var width = panel.offsetWidth || panel.getBoundingClientRect().width || window.innerWidth;
       var offset = Math.round((width + 64) * (1 - progress) * 10) / 10;
 
@@ -94,6 +123,11 @@
     }
   }
 
+  function handleResize() {
+    updateHeaderLayout();
+    queueUpdate();
+  }
+
   function updateMotionPreference(event) {
     prefersReducedMotion = event.matches;
     queueUpdate();
@@ -103,7 +137,10 @@
     var foundPanels = document.querySelectorAll(heroTextSelector);
     var i;
 
-    if (!foundPanels.length) {
+    headerElement = document.querySelector(".headerAndNavContainer.fixedNav");
+    updateHeaderLayout();
+
+    if (!foundPanels.length && !headerElement) {
       removeClass(root, "hero-reveal-enabled");
       return;
     }
@@ -114,8 +151,12 @@
       foundPanels[i].addEventListener("blur", queueUpdate, true);
     }
 
+    if (headerElement) {
+      headerElement.addEventListener("focusin", queueUpdate, false);
+      headerElement.addEventListener("focusout", queueUpdate, false);
+    }
     window.addEventListener("scroll", queueUpdate, false);
-    window.addEventListener("resize", queueUpdate, false);
+    window.addEventListener("resize", handleResize, false);
     if (reducedMotionQuery) {
       if (reducedMotionQuery.addEventListener) {
         reducedMotionQuery.addEventListener("change", updateMotionPreference);
