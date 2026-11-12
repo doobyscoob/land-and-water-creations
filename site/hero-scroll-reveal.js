@@ -85,11 +85,11 @@
     var height = rect.height || hero.offsetHeight || 1;
     var heroTop = rect.top + scrollPosition;
     var start = Math.max(0, heroTop - headerInset);
-    var finish = heroTop + height - headerInset - height / 3;
+    var finish = heroTop + height - headerInset - height * 2 / 3;
     var progress;
 
     if (finish <= start) {
-      finish = start + height * 2 / 3;
+      finish = start + height / 3;
     }
     progress = Math.max(0, Math.min(1, (scrollPosition - start) / (finish - start)));
     return progress * progress * (3 - 2 * progress);
