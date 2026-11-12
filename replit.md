@@ -23,3 +23,6 @@ Production tracking is skipped on localhost and `.replit.dev` preview hosts.
 The imported Google Tag Manager container includes a legacy message listener
 that calls `window.log` on a parse error; loading it in the editor preview caused
 uncaught errors. Production hosts retain the existing tracking configuration.
+The development server also serves an inert script for `/js/head`, regardless
+of hostname, and sends `Cache-Control: no-store` so preview fixes are not cached.
+This behavior is development-only; Cloudflare still serves the static files.
