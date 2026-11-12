@@ -26,3 +26,11 @@ uncaught errors. Production hosts retain the existing tracking configuration.
 The development server also serves an inert script for `/js/head`, regardless
 of hostname, and sends `Cache-Control: no-store` so preview fixes are not cached.
 This behavior is development-only; Cloudflare still serves the static files.
+
+## Change workflow
+
+- Use the existing files and live site as the design reference. Preserve current page layouts and styles, including the large hero with its wavy lower edge, typography, spacing, buttons, navigation, and mobile layout.
+- Keep supplied project photos byte-for-byte unless image changes are explicitly requested. Reuse existing logos and badges.
+- Limit edits to what the user asks for. Preserve existing URLs, SEO metadata, HighLevel forms, and the static site structure.
+- Work on a branch. Show desktop and mobile previews and summarize changed files before the user merges.
+- Leave publishing to the GitHub pull request.
