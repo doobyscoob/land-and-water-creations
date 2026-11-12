@@ -1,11 +1,12 @@
 /* Outdoor living page: uses the site's existing type and button language. */
 .outdoorLiving {
-  --outdoor-ink: #24383a;
-  --outdoor-muted: #596a68;
-  --outdoor-green: #397454;
-  --outdoor-line: #d9e1dc;
-  --outdoor-paper: #f4f6f2;
+  --outdoor-ink: #121212;
+  --outdoor-muted: #555;
+  --outdoor-green: #0727fd;
+  --outdoor-line: #ddd;
+  --outdoor-paper: #fff;
   color: var(--outdoor-ink);
+  background: #fff;
 }
 
 .outdoorLiving p {
@@ -17,9 +18,20 @@
 }
 
 .outdoor-intro {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: clamp(58px, 9vw, 112px) 6% clamp(52px, 7vw, 90px);
+  min-height: 570px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 95px 4% 120px;
+  background: url("../assets/outdoor-living/timber-pavilion.jpg") center 45% / cover;
+  border-radius: 0 0 45% 10% / 0 0 10% 5%;
+}
+
+.outdoor-intro__panel {
+  max-width: 735px;
+  padding: 30px;
+  background: rgba(255, 255, 255, .88);
+  border-radius: 60px;
 }
 
 .outdoor-eyebrow,
@@ -36,17 +48,17 @@
 .outdoor-intro .contentTitle {
   max-width: 760px;
   padding: 0 0 20px;
-  font-size: clamp(38px, 6vw, 68px);
-  line-height: 1.05;
-  letter-spacing: -.035em;
+  font-size: clamp(28px, 3vw, 34px);
+  line-height: 1.2;
+  letter-spacing: normal;
   text-transform: none;
 }
 
 .outdoor-lede {
   max-width: 780px;
-  color: #405552;
-  font-size: clamp(20px, 2.5vw, 27px);
-  line-height: 1.48 !important;
+  color: var(--outdoor-muted);
+  font-size: 18px;
+  line-height: 1.6 !important;
 }
 
 .outdoor-intro__copy {
@@ -63,42 +75,41 @@
 }
 
 .outdoorLiving .outdoor-actions .button {
-  border-radius: 2px;
-  padding: 11px 22px;
-  background: #255f49;
-  font-size: 15px;
-  letter-spacing: .015em;
+  border-radius: 40px;
+  padding: 9px 20px;
+  background: #0727fd;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: normal;
   transition: background-color 180ms ease, transform 180ms ease;
 }
 
 .outdoorLiving .outdoor-actions .button:hover,
 .outdoorLiving .outdoor-actions .button:focus-visible {
-  background: #397454;
+  background: #0016b8;
   transform: translateY(-2px);
 }
 
 .outdoorLiving .outdoor-actions .outdoor-phone {
-  border: 1px solid #a8b8ad;
-  color: var(--outdoor-ink);
-  background: transparent;
+  color: #fff;
+  background: #0727fd;
 }
 
 .outdoorLiving .outdoor-actions .outdoor-phone:hover,
 .outdoorLiving .outdoor-actions .outdoor-phone:focus-visible {
   color: #fff;
-  background: #397454;
+  background: #0016b8;
 }
 
 .outdoor-planning {
-  display: grid;
-  grid-template-columns: minmax(180px, .75fr) minmax(0, 1.35fr);
-  gap: clamp(30px, 8vw, 120px);
+  display: block;
+  text-align: center;
   padding: clamp(42px, 6vw, 76px) max(6%, calc((100% - 1040px) / 2));
   background: var(--outdoor-paper);
 }
 
 .outdoor-planning__label {
-  display: flex;
+  display: none;
   align-items: flex-start;
   gap: 15px;
   padding-top: 8px;
@@ -118,12 +129,13 @@
 }
 
 .outdoor-planning__body {
-  max-width: 660px;
+  max-width: 850px;
+  margin: 0 auto;
 }
 
 .outdoor-planning__body .contentTitle {
   padding: 0 0 17px;
-  font-size: clamp(29px, 4vw, 42px);
+  font-size: clamp(26px, 3vw, 34px);
   text-transform: none;
 }
 
@@ -171,7 +183,7 @@
 
 .outdoor-gallery__heading .contentTitle {
   padding: 0;
-  font-size: clamp(30px, 4vw, 44px);
+  font-size: clamp(26px, 3vw, 34px);
   text-transform: none;
 }
 
@@ -229,8 +241,8 @@
   gap: 12px;
   padding: 12px 2px 0;
   color: var(--outdoor-ink);
-  font-family: Georgia, serif;
-  font-size: 17px;
+  font-family: inherit;
+  font-size: 16px;
   line-height: 1.45;
 }
 
@@ -245,10 +257,10 @@
 
 .outdoor-principles {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: clamp(32px, 8vw, 120px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 36px;
   row-gap: 48px;
-  max-width: 1050px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: clamp(55px, 8vw, 100px) 6%;
   border-top: 1px solid var(--outdoor-line);
@@ -265,14 +277,12 @@
 
 .outdoor-principle .contentTitle {
   padding: 0 0 13px;
-  font-size: clamp(25px, 3vw, 34px);
+  font-size: clamp(24px, 2.5vw, 30px);
   text-transform: none;
 }
 
 .outdoor-principle--gather {
-  grid-column: 2;
-  padding-top: 16px;
-  border-top: 1px solid var(--outdoor-line);
+  grid-column: auto;
 }
 
 .outdoor-cta {
@@ -285,7 +295,7 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 0 0 15px;
-  font-size: clamp(31px, 4.6vw, 48px);
+  font-size: clamp(28px, 3vw, 34px);
   text-transform: none;
 }
 
@@ -300,7 +310,14 @@
 
 @media (max-width: 767px) {
   .outdoor-intro {
-    padding: 52px 7% 58px;
+    min-height: 0;
+    padding: 65px 6% 85px;
+    border-radius: 0 0 25% 5% / 0 0 4% 2%;
+  }
+
+  .outdoor-intro__panel {
+    padding: 25px;
+    border-radius: 35px;
   }
 
   .outdoor-planning {

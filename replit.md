@@ -18,3 +18,8 @@ server is only for development; it does not replace the hosting configuration.
 The optimized outdoor living photos live in `site/assets/outdoor-living/`.
 Uploaded originals and generated verification output are excluded from Git and
 deployment.
+
+Production tracking is skipped on localhost and `.replit.dev` preview hosts.
+The imported Google Tag Manager container includes a legacy message listener
+that calls `window.log` on a parse error; loading it in the editor preview caused
+uncaught errors. Production hosts retain the existing tracking configuration.
