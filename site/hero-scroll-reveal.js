@@ -17,6 +17,15 @@
     ".blockWrap_fe6e7977b9aa4296adbb0b07bb917213 .itemPreview",
     ".outdoor-intro__panel"
   ].join(", ");
+  var panels = [];
+  var framePending = false;
+  var reducedMotionQuery = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : null;
+  var prefersReducedMotion = !!(reducedMotionQuery && reducedMotionQuery.matches);
+  var requestFrame = window.requestAnimationFrame || function (callback) {
+    return window.setTimeout(callback, 16);
+  };
 
   function addClass(element, className) {
     if (element.classList) {
@@ -45,31 +54,106 @@
       0;
   }
 
-  function revealHeroText() {
-    addClass(root, "hero-reveal-visible");
-    window.removeEventListener("scroll", checkScroll, false);
+  function getHeroContainer(panel) {
+    var current = panel;
+    while (current && current !== document.body) {
+      if (current.classList && current.classList.contains("outdoor-intro")) {
+        return current;
+      }
+      if (typeof current.className === "string" &&
+          /(?:^|\s)blockWrap_[^\s]+/.test(current.className)) {
+        return current;
+      }
+      current = current.parentElement;
+    }
+    return panel;
   }
 
-  function checkScroll() {
-    if (getScrollPosition() > 4) {
-      revealHeroText();
+  function getHeaderInset() {
+    var header = document.querySelector(".headerAndNavContainer.fixedNav");
+    var position;
+    if (!header) {
+      return 0;
+    }
+    position = window.getComputedStyle(header).position;
+    return position === "fixed" || position === "sticky" ? header.offsetHeight : 0;
+  }
+
+  function getRevealProgress(panel, scrollPosition, headerInset) {
+    var hero = getHeroContainer(panel);
+    var rect = hero.getBoundingClientRect();
+    var height = rect.height || hero.offsetHeight || 1;
+    var heroTop = rect.top + scrollPosition;
+    var start = Math.max(0, heroTop - headerInset);
+    var finish = heroTop + height - headerInset - height / 3;
+    var progress;
+
+    if (finish <= start) {
+      finish = start + height * 2 / 3;
+    }
+    progress = Math.max(0, Math.min(1, (scrollPosition - start) / (finish - start)));
+    return progress * progress * (3 - 2 * progress);
+  }
+
+  function updatePanels() {
+    var scrollPosition = getScrollPosition();
+    var headerInset = getHeaderInset();
+    var i;
+
+    framePending = false;
+    for (i = 0; i < panels.length; i += 1) {
+      var panel = panels[i];
+      var progress = panel.contains(document.activeElement)
+        ? 1
+        : getRevealProgress(panel, scrollPosition, headerInset);
+      var width = panel.offsetWidth || panel.getBoundingClientRect().width || window.innerWidth;
+      var offset = Math.round((width + 64) * (1 - progress) * 10) / 10;
+
+      panel.style.opacity = progress.toFixed(3);
+      panel.style.pointerEvents = progress > 0.02 ? "auto" : "none";
+      panel.style.transform = prefersReducedMotion
+        ? "none"
+        : "translate3d(-" + offset + "px, 0, 0)";
     }
   }
 
+  function queueUpdate() {
+    if (!framePending) {
+      framePending = true;
+      requestFrame(updatePanels);
+    }
+  }
+
+  function updateMotionPreference(event) {
+    prefersReducedMotion = event.matches;
+    queueUpdate();
+  }
+
   function setupHeroReveal() {
-    var panels = document.querySelectorAll(heroTextSelector);
+    var foundPanels = document.querySelectorAll(heroTextSelector);
     var i;
 
-    if (!panels.length) {
+    if (!foundPanels.length) {
       removeClass(root, "hero-reveal-enabled");
       return;
     }
 
-    window.addEventListener("scroll", checkScroll, false);
-    for (i = 0; i < panels.length; i += 1) {
-      panels[i].addEventListener("focus", revealHeroText, true);
+    for (i = 0; i < foundPanels.length; i += 1) {
+      panels.push(foundPanels[i]);
+      foundPanels[i].addEventListener("focus", queueUpdate, true);
+      foundPanels[i].addEventListener("blur", queueUpdate, true);
     }
-    checkScroll();
+
+    window.addEventListener("scroll", queueUpdate, false);
+    window.addEventListener("resize", queueUpdate, false);
+    if (reducedMotionQuery) {
+      if (reducedMotionQuery.addEventListener) {
+        reducedMotionQuery.addEventListener("change", updateMotionPreference);
+      } else if (reducedMotionQuery.addListener) {
+        reducedMotionQuery.addListener(updateMotionPreference);
+      }
+    }
+    updatePanels();
   }
 
   if (document.readyState === "loading") {
