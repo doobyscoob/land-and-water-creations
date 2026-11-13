@@ -68,33 +68,6 @@
   line-height: 1.55;
 }
 
-.project-detail {
-  width: 92%;
-  max-width: 1100px;
-  margin: 38px auto 52px;
-}
-
-.project-detail__title {
-  margin: 0 0 22px;
-  color: #202020;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  line-height: 1.25;
-}
-
-.project-detail__image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.project-detail__copy {
-  max-width: 800px;
-  margin: 22px auto 0;
-  color: #4b4b4b;
-  font-size: 1.1rem;
-  line-height: 1.65;
-}
-
 @media (max-width: 900px) {
   .project-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -111,10 +84,5 @@
     grid-template-columns: 1fr;
     gap: 18px;
     width: calc(100% - 32px);
-  }
-
-  .project-detail {
-    width: calc(100% - 32px);
-    margin: 24px auto 36px;
   }
 }
