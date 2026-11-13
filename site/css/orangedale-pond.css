@@ -1,6 +1,9 @@
 .orangedale-hero {
   padding-top: 32px;
-  background: #fff;
+  background-color: #f0f0f0;
+  background-image: url("/e6d5e5d7fcc6483c90819a8c6c06bace/i/e90648a0c6514fa1a6f6f31152e35baf/1/5feFb8zhrk/BG.jpg");
+  background-position: center;
+  background-size: cover;
 }
 
 .orangedale-hero .blockWrap_fe6e7977b9aa4296adbb0b07bb917213 {
@@ -24,12 +27,12 @@
 }
 
 .orangedale-hero__video {
-  width: 100%;
+  width: min(100%, 480px);
   margin: 28px auto 0;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 9 / 16;
   overflow: hidden;
   border-radius: 0 0 45% 10% / 0 0 10% 5%;
-  background: #111;
+  background: transparent;
 }
 
 .orangedale-hero__video iframe {
@@ -51,6 +54,7 @@
   }
 
   .orangedale-hero__video {
+    width: min(calc(100% - 32px), 480px);
     margin-top: 20px;
     border-radius: 0 0 25% 5% / 0 0 4% 2%;
   }
