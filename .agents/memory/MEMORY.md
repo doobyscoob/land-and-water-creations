@@ -1,0 +1,1 @@
+- [Hero/header handoff](hero-header-handoff.md) — the user approved the synchronized desktop header exit and hero-panel entry, with mobile navigation scrolling naturally.

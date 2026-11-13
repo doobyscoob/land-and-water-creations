@@ -11,3 +11,42 @@
         right: auto !important; 
     }
 }
+
+/* Keep hero photos clear until the text panel gradually follows the scroll. */
+html.hero-reveal-enabled .blockWrap_ded721d803b44f1180a742509044a2e9 .itemPreview,
+html.hero-reveal-enabled .blockWrap_d150b314595543938a60de851c5dcddf .itemPreview,
+html.hero-reveal-enabled .blockWrap_a9a2de40559b45509502261114232594 .itemPreview,
+html.hero-reveal-enabled .blockWrap_e14491e8e6384619ae0a873eb8eea901 .itemPreview,
+html.hero-reveal-enabled .blockWrap_ae3c46523fa246afb26df1be038b1433 .itemPreview,
+html.hero-reveal-enabled .blockWrap_b8166f0d6b2f49baaed81e89bc85e243 .itemPreview,
+html.hero-reveal-enabled .blockWrap_fa3901180ed64e08bdfa17ef69e55e8d .itemPreview,
+html.hero-reveal-enabled .blockWrap_e2d1827cfdc54ab882291d79bdeacc1f .itemPreview,
+html.hero-reveal-enabled .blockWrap_b2eba23e70a8407a81f49aa13ed98a03 .itemPreview,
+html.hero-reveal-enabled .blockWrap_df1d8b2f30d042e0bad4353f0e717d4c .itemPreview,
+html.hero-reveal-enabled .blockWrap_dcf088aad5ce4746a3bf80f8232390f6 .itemPreview,
+html.hero-reveal-enabled .blockWrap_fe6e7977b9aa4296adbb0b07bb917213 .itemPreview,
+html.hero-reveal-enabled .outdoor-intro__panel {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(-120%, 0, 0);
+    will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.hero-reveal-enabled .blockWrap_ded721d803b44f1180a742509044a2e9 .itemPreview,
+    html.hero-reveal-enabled .blockWrap_d150b314595543938a60de851c5dcddf .itemPreview,
+    html.hero-reveal-enabled .blockWrap_a9a2de40559b45509502261114232594 .itemPreview,
+    html.hero-reveal-enabled .blockWrap_e14491e8e6384619ae0a873eb8eea901 .itemPreview,
+    html.hero-reveal-enabled .blockWrap_ae3c46523fa246afb26df1be038b1433 .itemPreview,
+    html.hero-reveal-enabled .blockWrap_b8166f0d6b2f49baaed81e89bc85e243 .itemPreview,
+    html.hero-reveal-enabled .blockWrap_fa3901180ed64e08bdfa17ef69e55e8d .itemPreview,
+    html.hero-reveal-enabled .blockWrap_e2d1827cfdc54ab882291d79bdeacc1f .itemPreview,
+    html.hero-reveal-enabled .blockWrap_b2eba23e70a8407a81f49aa13ed98a03 .itemPreview,
+    html.hero-reveal-enabled .blockWrap_df1d8b2f30d042e0bad4353f0e717d4c .itemPreview,
+    html.hero-reveal-enabled .blockWrap_dcf088aad5ce4746a3bf80f8232390f6 .itemPreview,
+    html.hero-reveal-enabled .blockWrap_fe6e7977b9aa4296adbb0b07bb917213 .itemPreview,
+    html.hero-reveal-enabled .outdoor-intro__panel {
+        transform: none;
+        will-change: opacity;
+    }
+}

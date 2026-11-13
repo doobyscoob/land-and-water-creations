@@ -1,0 +1,60 @@
+.orangedale-hero {
+  padding-top: 32px;
+  background-color: #f0f0f0;
+  background-image: url("/e6d5e5d7fcc6483c90819a8c6c06bace/i/e90648a0c6514fa1a6f6f31152e35baf/1/5feFb8zhrk/BG.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.orangedale-hero .blockWrap_fe6e7977b9aa4296adbb0b07bb917213 {
+  padding: 0 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.orangedale-hero .items_fe6e7977b9aa4296adbb0b07bb917213 .item {
+  box-sizing: border-box;
+  width: min(92%, 900px);
+  margin: 0 auto;
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 48px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.1);
+}
+
+.orangedale-hero .items_fe6e7977b9aa4296adbb0b07bb917213 .contentTitle {
+  margin-top: 0;
+}
+
+.orangedale-video {
+  width: min(100%, 480px);
+  margin: 0 auto;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 0 0 45% 10% / 0 0 10% 5%;
+  background: transparent;
+}
+
+.orangedale-video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 700px) {
+  .orangedale-hero {
+    padding-top: 20px;
+  }
+
+  .orangedale-hero .items_fe6e7977b9aa4296adbb0b07bb917213 .item {
+    width: calc(100% - 32px);
+    padding: 22px 20px;
+    border-radius: 32px;
+  }
+
+  .orangedale-video {
+    width: 100%;
+    border-radius: 0 0 25% 5% / 0 0 4% 2%;
+  }
+}
