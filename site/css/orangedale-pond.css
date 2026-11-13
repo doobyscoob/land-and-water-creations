@@ -26,16 +26,16 @@
   margin-top: 0;
 }
 
-.orangedale-hero__video {
+.orangedale-video {
   width: min(100%, 480px);
-  margin: 28px auto 0;
+  margin: 0 auto;
   aspect-ratio: 9 / 16;
   overflow: hidden;
   border-radius: 0 0 45% 10% / 0 0 10% 5%;
   background: transparent;
 }
 
-.orangedale-hero__video iframe {
+.orangedale-video iframe {
   display: block;
   width: 100%;
   height: 100%;
@@ -53,9 +53,8 @@
     border-radius: 32px;
   }
 
-  .orangedale-hero__video {
-    width: min(calc(100% - 32px), 480px);
-    margin-top: 20px;
+  .orangedale-video {
+    width: 100%;
     border-radius: 0 0 25% 5% / 0 0 4% 2%;
   }
 }
